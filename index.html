@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asuka Higa Portfolio</title>
+  <meta name="description" content="コーダー・マークアップエンジニア・フロントエンドエンジニアを目指す、比嘉明日香のポートフォリオサイトです。">
+  <link rel="stylesheet" href="css/destyle.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter&family=Noto+Sans+JP&display=swap"
+    rel="stylesheet">
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <link rel="icon" href="img/favicon.ico">
+</head>
+
+<body>
+  <!-- headerとmainで2カラムを作成するためのdiv -->
+  <div class="container_header-main">
+
+    <!-- header -->
+    <header class="header font2">
+      <a href="index.html">
+        <img src="img/logo.png" alt="サイトのロゴマーク" class="logo">
+      </a>
+      <!-- h1 画面左端でスクロールに追従 -->
+      <div class="container_h1">
+        <h1 class="main-title">ASUKA HIGA PORTFOLIO</h1>
+        <div class="main-arrow"></div>
+      </div><!-- /.container_h1 -->
+      <div class="hamburger-icon">
+        <span class="hamburger-icon-dots1"></span>
+        <span class="hamburger-icon-dots2"></span>
+      </div>
+      <nav class="header-nav">
+        <ul class="header-nav-list font2">
+          <li class="header-nav-item"><a href="about.html">ABOUT</a></li>
+          <li class="header-nav-item"><a href="works.html">WORKS</a></li>
+          <li class="header-nav-item"><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- mainとfooterを内包するdiv -->
+    <div class="container_main-footer">
+
+      <!-- main -->
+      <main class="main">
+
+        <!-- about section -->
+        <section class="about-section">
+          <h2 class="about-title h2 font2">ABOUT</h2>
+          <div class="container_about-texts contents">
+            <div class="container_name">
+              <p class="name_alphabet">ASUKA HIGA</p>
+              <p class="name_kanji">比嘉 明日香</p>
+            </div><!-- /.container_name -->
+            <div class="container_self-introduction">
+              <p class="self-introduction-text1">兵庫県在住、29歳。</p>
+              <p class="self-introduction-text2">コーディングを仕事にすることを目指して日々勉強中です。</p>
+            </div><!-- /.container_self-introduction -->
+            <div class="container_viewmore">
+              <a href="about.html">
+                <p class="viewmore-text">VIEW MORE</p>
+              </a>
+            </div><!-- /.container_viewmore -->
+          </div><!-- /.container_about-texts -->
+          <div class="firstview-img"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <small>&copy 2023 Asuka Higa</small>
+      </footer>
+    </div><!-- /.container_main-footer -->
+  </div><!-- /.container_header-main -->
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
