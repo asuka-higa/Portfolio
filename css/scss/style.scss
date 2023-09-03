@@ -1,8 +1,8 @@
 @charset "utf-8";
 
-/******************
-      colors
-*******************/
+/* --------------------
+        colors
+-------------------- */
 
 
 $orange: #EB5C01;
@@ -17,12 +17,12 @@ $gray: #DEDDDD;
 $black: #000;
 $white: #fff;
 
-/******************
-  メディアクエリ
-*******************/
+/* --------------------
+        @media
+-------------------- */
 
 $pc: 1280px;
-$tab: 768px;
+$tab: 960px;
 $sp: 767px;
 
 @mixin pc {
@@ -43,32 +43,112 @@ $sp: 767px;
   }
 }
 
-/******************
-      fonts
-*******************/
-
+/* --------------------
+        fonts
+-------------------- */
 
 html {
   font-size: 100%;
 }
 
-// 基本のフォント
+/* 基本のフォント */
 body {
   font-family: 'Noto Sans JP', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+  line-height: 1.8rem;
 
   @include sp {
     font-size: 1rem;
   }
 }
 
-// 見出しなど
-.font2 {
-  font-family: 'Bebas Neue', sans-serif;
+/* 見出しなど用 */
+/* font2の上下余白を調整 */
+@mixin text-crop-font2 ($line-height: 1.3, $top-adjustment: 0px, $bottom-adjustment: 0px) {
+  // Configured in Step 1
+  $top-crop: 6;
+  $bottom-crop: 9;
+  $crop-font-size: 32;
+  $crop-line-height: 1.2;
+
+  // Apply values to calculate em-based margins that work with any font size
+  $dynamic-top-crop: max(($top-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+  $dynamic-bottom-crop: max(($bottom-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+
+  // Mixin output
+  line-height: $line-height;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
+  }
+
+  &::before {
+    margin-bottom: calc(-#{$dynamic-top-crop}em + #{$top-adjustment});
+  }
+
+  &::after {
+    margin-top: calc(-#{$dynamic-bottom-crop}em + #{$bottom-adjustment});
+  }
 }
 
-// スキルの見出し用
+.font2:not(.header-nav-item) {
+  font-family: 'Bebas Neue',
+    sans-serif;
+  @include text-crop-font2;
+}
+
+/* 名前の漢字用 */
 .font3 {
+  @font-face {
+    font-family: 'Senobi-Gothic';
+    src: url(/font/Senobi-Gothic-Medium.ttf) format('truetype');
+  }
+
+  /* フォントの上下余白を調整 */
+  @mixin text-crop-font3 ($line-height: 1.3, $top-adjustment: 0px, $bottom-adjustment: 0px) {
+    // Configured in Step 1
+    $top-crop: 4;
+    $bottom-crop: 3;
+    $crop-font-size: 25.6;
+    $crop-line-height: 1.2;
+
+    // Apply values to calculate em-based margins that work with any font size
+    $dynamic-top-crop: max(($top-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+    $dynamic-bottom-crop: max(($bottom-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+
+    // Mixin output
+    line-height: $line-height;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      height: 0;
+      width: 0;
+    }
+
+    &::before {
+      margin-bottom: calc(-#{$dynamic-top-crop}em + #{$top-adjustment});
+    }
+
+    &::after {
+      margin-top: calc(-#{$dynamic-bottom-crop}em + #{$bottom-adjustment});
+    }
+  }
+
+  font-family: 'Senobi-Gothic',
+  sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: -0.2em;
+  @include text-crop-font3;
+}
+
+/* スキルの見出し用 */
+.font4 {
   font-family: 'Inter', sans-serif;
   font-size: 1.8125rem;
 
@@ -77,10 +157,9 @@ body {
   }
 }
 
-/******************
-    全体で共通
-*******************/
-
+/* --------------------
+      全体で共通
+-------------------- */
 a {
   cursor: pointer;
 }
@@ -91,25 +170,37 @@ section {
 
 .contents {
   width: 75%;
+  height: fit-content;
   margin: 0 auto;
 }
 
 .h2 {
   width: fit-content;
-  font-size: clamp(2rem, 3vw, 3.5rem);
+  font-size: 2.4375rem;
   border-bottom: 4px solid $orange;
   margin: 0 auto 120px;
+  padding: 0 0 6px 0;
 
   @include sp {
-    font-size: 1.5rem;
+    font-size: 1.875rem;
     margin: 0 auto 48px;
+    padding: 0 0 4px 0;
   }
 }
 
-/******************
-      body
-*******************/
+/* --------------------
+        z-index
+-------------------- */
+$header: 100;
 
+$container_logo-h1-hamburger-menu: 10;
+$header-nav: 5;
+
+$slide-before: 1;
+
+/* -------------------
+        body
+------------------- */
 .container_header-main {
   display: flex;
 
@@ -118,10 +209,9 @@ section {
   }
 }
 
-/******************
-      header
-*******************/
-
+/* -------------------
+        header
+------------------- */
 .header {
   background-color: $orange;
   width: 13%;
@@ -133,19 +223,33 @@ section {
   top: 0;
   padding-top: 64px;
   position: sticky;
-  z-index: 10;
+  z-index: $header;
 
   @include sp {
     width: 100%;
     max-width: none;
     height: 80px;
     flex-direction: row;
-    padding: 16px;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
   }
 
-  // ロゴ画像
+  /* logol/h1/hamburger-menuのコンテナ */
+  .container_logo-h1-hamburger-menu {
+    background-color: $orange;
+    justify-content: space-between;
+    align-items: center;
+    z-index: $container_logo-h1-hamburger-menu;
+
+    @include sp {
+      display: flex;
+      width: 100%;
+      padding: 16px;
+    }
+  }
+
+  /* ロゴ画像 */
   .logo {
     display: block;
     margin: 0 auto;
@@ -158,9 +262,10 @@ section {
     }
   }
 
-  // h1と矢印
+  /* h1と矢印のコンテナ */
   .container_h1 {
     width: fit-content;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,37 +275,74 @@ section {
     left: 100%;
 
     @include sp {
-      writing-mode: horizontal-tb;
-      position: static;
-    }
-
-    .main-title {
-      font-size: clamp(2rem, 3vw, 3.5rem);
-      color: $white;
-      writing-mode: vertical-rl;
-      margin-bottom: 8px;
-
-      @include sp {
-        font-size: 1.5rem;
-        writing-mode: horizontal-tb;
-        border-top: solid 1px $white;
-        border-bottom: solid 1px $white;
-        margin: 0;
-        padding-inline: 8px;
-      }
-    }
-
-    .main-arrow {
-      width: 3px;
-      height: 200px;
-      background-color: $white;
-
-      @include sp {
-        display: none;
-      }
+      position: initial;
+      padding: 4px;
+      border-top: solid 1px $white;
+      border-bottom: solid 1px $white;
     }
   }
 
+  /* h1 */
+  .main-title {
+    color: $white;
+    font-size: 2rem;
+    writing-mode: vertical-rl;
+    margin: 0 0 16px 0;
+
+    @include sp {
+      font-size: 1.5rem;
+      writing-mode: horizontal-tb;
+      margin: 0;
+      padding-inline: 8px;
+    }
+  }
+
+  /* 矢印 */
+  .main-arrow {
+    background-color: $white;
+    width: 3px;
+    height: 80px;
+    position: relative;
+    border-radius: 0 0 4px 4px;
+    transition: all 1s linear(0, .25, 0.5, .75, 1, 0.9, .95, 1);
+
+    @mixin main-arrow-parts {
+      content: "";
+      background-color: $white;
+      width: 3px;
+      height: 12px;
+      position: absolute;
+      bottom: 0px;
+      transform-origin: bottom;
+    }
+
+    &::before {
+      @include main-arrow-parts;
+      right: 1px;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      @include main-arrow-parts;
+      left: 1px;
+      transform: rotate(-45deg);
+    }
+
+    &.load {
+      height: calc(100vh - 337px);
+
+      @include tab {
+        height: calc(850px - 337px);
+      }
+
+    }
+
+    @include sp {
+      display: none;
+    }
+  }
+
+  /* ハンバーガーメニューのアイコン */
   .hamburger-icon {
     display: none;
 
@@ -212,58 +354,59 @@ section {
       justify-content: center;
       cursor: pointer;
     }
+  }
 
-    .hamburger-icon-dots1,
-    .hamburger-icon-dots2 {
+  .hamburger-icon-dots1,
+  .hamburger-icon-dots2 {
+    display: block;
+    background-color: $white;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.4s ease;
+    transform-origin: center;
+
+    &::before {
+      content: "";
       display: block;
       background-color: $white;
       width: 6px;
       height: 6px;
       border-radius: 50%;
       position: absolute;
-      transition: transform 0.4s ease;
-      transform-origin: center;
-
-      &::before {
-        content: "";
-        display: block;
-        background-color: $white;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        position: absolute;
-        margin-top: -12px;
-      }
-
-      &::after {
-        content: "";
-        display: block;
-        background-color: $white;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        position: absolute;
-        margin-top: 12px;
-      }
+      margin-top: -12px;
     }
 
-    .hamburger-icon-dots1.active {
-      transform: rotate(225deg);
-    }
-
-    .hamburger-icon-dots2.active {
-      transform: rotate(-225deg);
+    &::after {
+      content: "";
+      display: block;
+      background-color: $white;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      position: absolute;
+      margin-top: 12px;
     }
   }
 
+  .hamburger-icon-dots1.active {
+    transform: rotate(225deg);
+  }
+
+  .hamburger-icon-dots2.active {
+    transform: rotate(-225deg);
+  }
+
+
+  /* ナビゲーション */
   .header-nav {
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.4s ease;
-    z-index: -10;
-
+    z-index: $header-nav;
 
     @include sp {
       width: 100%;
@@ -290,7 +433,7 @@ section {
   }
 
   .header-nav-item {
-    font-size: max(2.5vw, 1rem);
+    font-size: max(2.5vw, 1.4rem);
     color: $white;
     text-align: center;
     margin-bottom: 5vh;
@@ -312,7 +455,7 @@ section {
   }
 
   // 子ページを開いている時用
-  .header-nav-item.active {
+  .header-nav-item.open {
     &::before {
       content: "> ";
     }
@@ -323,30 +466,191 @@ section {
   }
 }
 
-/******************
-      main
-*******************/
 
+/* --------------------
+        main
+-------------------- */
 .container_main-footer {
   flex-grow: 1;
 }
 
-/******************
-    about section
-*******************/
-
+/* --------------------
+      about section
+-------------------- */
 .about-section {
   background-color: $gray;
+  /* viewmoreの下に余白ができているので調整 */
+  padding: 64px 0 98px 0;
+  position: relative;
+
+  /* 名前のコンテナ */
+  .container_name {
+    background-color: $white;
+    width: 0;
+    height: 50px;
+    display: flex;
+    border: 1px solid $black;
+    margin-bottom: 320px;
+    transition: all .6s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+
+    &.load {
+      opacity: 1;
+      width: 285px;
+      padding: 12px 24px;
+    }
+
+    &::before {
+      content: '';
+      animation: display .7s cubic-bezier(.4, 0, .2, 1) 0.6s forwards;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: $slide-before;
+    }
+
+    @keyframes display {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    @include sp {
+      display: block;
+      width: fit-content;
+      height: fit-content;
+    }
+  }
+
+  @mixin display-none {
+    display: none;
+
+    &.load {
+      display: block;
+    }
+  }
+
+  .name_alphabet {
+    font-size: 2rem;
+    margin-right: 16px;
+    @include display-none;
+
+    @include sp {
+      font-size: 1.5rem
+    }
+  }
+
+  .name_kanji {
+    @include display-none;
+  }
+
+  .container_self-introduction {
+    background-color: $white;
+    width: 0;
+    height: 112px;
+    border: 1px solid $black;
+    margin: 0 0 0 calc(100% - 396px);
+    overflow: hidden;
+    position: relative;
+    transition: all .7s ease-in-out;
+    opacity: 0;
+
+    &.load {
+      opacity: 1;
+      width: 396px;
+      padding: 12px 24px;
+    }
+
+    &::before {
+      content: '';
+      animation: display .7s cubic-bezier(.4, 0, .2, 1) 1.8s forwards;
+      background: #fff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: $slide-before;
+    }
+  }
+
+  .self-introduction-text1,
+  .self-introduction-text2 {
+    @include display-none;
+  }
+
+  /* viewmoreボタン */
+  .container_viewmore {
+    background-color: $orange;
+    color: $white;
+    font-size: 1.875rem;
+    width: fit-content;
+    border: 1px solid $black;
+    margin: 0 0 0 auto;
+    padding: 12px 24px;
+    transform: translate(-24px, -30px);
+    opacity: 0;
+    animation: opacity-fuwa .8s forwards 2.5s;
+
+    @keyframes opacity-fuwa {
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
+  .viewmore-text {
+    height: fit-content;
+
+    &:hover .viewmore-arrow {
+      animation: viewmore-arrow .4s infinite alternate;
+
+      @keyframes viewmore-arrow {
+        100% {
+          transform: translateX(8px);
+        }
+      }
+    }
+  }
+
+  .viewmore-arrow {
+    display: inline-block;
+    margin: 0 0 0 8px;
+  }
+
+  .firstview-img {
+    width: 75%;
+    height: 500px;
+    margin: 0 auto;
+    border: solid 1px $black;
+    border-radius: 76% 24% 55% 45% / 66% 22% 78% 34%;
+    position: absolute;
+    top: 200px;
+    right: 0;
+    left: 0;
+    background-image: url('/img/firstview.jpeg');
+    background-size: cover;
+    background-position: center top;
+
+    @include sp {}
+  }
 }
 
 
 
 
 
-/******************
-      footer
-*******************/
 
+/* --------------------
+        footer
+-------------------- */
 .footer {
   height: 192px;
 
