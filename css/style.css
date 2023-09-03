@@ -67,6 +67,11 @@ body {
 .font3::after {
   margin-top: calc(-0.1671875em + 0px);
 }
+@media screen and (max-width: 767px) {
+  .font3 {
+    font-size: 1.6rem;
+  }
+}
 
 /* スキルの見出し用 */
 .font4 {
@@ -107,7 +112,7 @@ section {
 }
 @media screen and (max-width: 767px) {
   .h2 {
-    font-size: 1.875rem;
+    font-size: 2rem;
     margin: 0 auto 48px;
     padding: 0 0 4px 0;
   }
@@ -389,8 +394,43 @@ section {
   /* viewmoreの下に余白ができているので調整 */
   padding: 64px 0 98px 0;
   position: relative;
+  /* ファーストビュー　画像 */
   /* 名前のコンテナ */
   /* viewmoreボタン */
+}
+@media screen and (max-width: 767px) {
+  .about-section {
+    padding: 24px 0 38px 0;
+  }
+}
+.about-section .firstview-img {
+  width: 75%;
+  height: 560px;
+  margin: 0 auto;
+  border: solid 1px #000;
+  border-radius: 76% 24% 55% 45%/66% 22% 78% 34%;
+  position: absolute;
+  top: 200px;
+  right: 0;
+  left: 0;
+  background-image: url("/img/firstview.jpeg");
+  background-size: cover;
+  background-position: center top;
+  overflow: hidden;
+}
+@media screen and (max-width: 767px) {
+  .about-section .firstview-img {
+    width: 150vw;
+    margin: 0 calc(50% - 50vw);
+    top: 120px;
+    left: -20%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .about-section .container_about-texts {
+    width: 100%;
+    padding: 0 16px;
+  }
 }
 .about-section .container_name {
   background-color: #fff;
@@ -404,10 +444,22 @@ section {
   position: relative;
   opacity: 0;
 }
+@media screen and (max-width: 767px) {
+  .about-section .container_name {
+    height: 87px;
+    margin-bottom: 360px;
+  }
+}
 .about-section .container_name.load {
   opacity: 1;
   width: 285px;
   padding: 12px 24px;
+}
+@media screen and (max-width: 767px) {
+  .about-section .container_name.load {
+    width: 156px;
+    padding: 12px 20px;
+  }
 }
 .about-section .container_name::before {
   content: "";
@@ -429,15 +481,11 @@ section {
 @media screen and (max-width: 767px) {
   .about-section .container_name {
     display: block;
-    width: -moz-fit-content;
-    width: fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
   }
 }
 .about-section .name_alphabet {
   font-size: 2rem;
-  margin-right: 16px;
+  margin: 0 16px 0 0;
   display: none;
 }
 .about-section .name_alphabet.load {
@@ -445,7 +493,8 @@ section {
 }
 @media screen and (max-width: 767px) {
   .about-section .name_alphabet {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    margin: 0 0 8px 0;
   }
 }
 .about-section .name_kanji {
@@ -465,10 +514,23 @@ section {
   transition: all 0.7s ease-in-out;
   opacity: 0;
 }
+@media screen and (max-width: 767px) {
+  .about-section .container_self-introduction {
+    height: 98px;
+    margin: 0 0 40px calc(100% - 282px);
+  }
+}
 .about-section .container_self-introduction.load {
   opacity: 1;
   width: 396px;
   padding: 12px 24px;
+}
+@media screen and (max-width: 767px) {
+  .about-section .container_self-introduction.load {
+    padding: 12px 20px;
+    width: 282px;
+    line-height: 1.5rem;
+  }
 }
 .about-section .container_self-introduction::before {
   content: "";
@@ -490,6 +552,22 @@ section {
 .about-section .self-introduction-text2.load {
   display: block;
 }
+.about-section .br-pc {
+  display: inline;
+}
+@media screen and (max-width: 767px) {
+  .about-section .br-pc {
+    display: none;
+  }
+}
+.about-section .br-sp {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .about-section .br-sp {
+    display: inline;
+  }
+}
 .about-section .container_viewmore {
   background-color: #EB5C01;
   color: #fff;
@@ -508,6 +586,13 @@ section {
     opacity: 1;
   }
 }
+@media screen and (max-width: 767px) {
+  .about-section .container_viewmore {
+    font-size: 1.5rem;
+    transform: none;
+    margin: 0 auto;
+  }
+}
 .about-section .viewmore-text {
   height: -moz-fit-content;
   height: fit-content;
@@ -524,20 +609,7 @@ section {
   display: inline-block;
   margin: 0 0 0 8px;
 }
-.about-section .firstview-img {
-  width: 75%;
-  height: 500px;
-  margin: 0 auto;
-  border: solid 1px #000;
-  border-radius: 76% 24% 55% 45%/66% 22% 78% 34%;
-  position: absolute;
-  top: 200px;
-  right: 0;
-  left: 0;
-  background-image: url("/img/firstview.jpeg");
-  background-size: cover;
-  background-position: center top;
-}
+
 /* --------------------
         footer
 -------------------- */

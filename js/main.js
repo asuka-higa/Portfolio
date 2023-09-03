@@ -20,6 +20,7 @@
           h1 矢印の動き
   ------------------------- */
 
+  // 伸びる動き
   const arrow = document.querySelector('.main-arrow');
 
   window.addEventListener('load', function () {
@@ -27,6 +28,9 @@
       arrow.classList.toggle('load');
     }, 3200);
   });
+
+  // WORKSと重なったら黒に色を変える
+
 
   /* -------------------------
           名前divの表示
