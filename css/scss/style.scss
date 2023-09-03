@@ -292,6 +292,7 @@ $slide-before: 1;
     font-size: 2rem;
     writing-mode: vertical-rl;
     margin: 0 0 16px 0;
+    -webkit-text-stroke: .5px $black;
 
     @include sp {
       font-size: 1.5rem;
@@ -307,12 +308,14 @@ $slide-before: 1;
     width: 3px;
     height: 80px;
     position: relative;
+    border: .5px solid $black;
     border-radius: 0 0 4px 4px;
     transition: all 1s linear(0, .25, 0.5, .75, 1, 0.9, .95, 1);
 
     @mixin main-arrow-parts {
       content: "";
       background-color: $white;
+      border: .5px solid $black;
       width: 3px;
       height: 12px;
       position: absolute;
@@ -486,6 +489,7 @@ $slide-before: 1;
   /* viewmoreの下に余白ができているので調整 */
   padding: 64px 0 98px 0;
   position: relative;
+  overflow: hidden;
 
   @include sp {
     padding: 24px 0 38px 0;
@@ -506,7 +510,6 @@ $slide-before: 1;
     background-image: url('/img/firstview.jpeg');
     background-size: cover;
     background-position: center top;
-    overflow: hidden;
 
     @include sp {
       width: 150vw;
@@ -710,7 +713,13 @@ $slide-before: 1;
 }
 
 
+/* --------------------
+    contact section
+-------------------- */
 
+.contact-section {
+  background-color: $light-orange;
+}
 
 
 
