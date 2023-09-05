@@ -192,6 +192,23 @@ section {
   }
 }
 
+
+.br-pc {
+  display: inline;
+
+  @include sp {
+    display: none;
+  }
+}
+
+.br-sp {
+  display: none;
+
+  @include sp {
+    display: inline;
+  }
+}
+
 /* --------------------
         z-index
 -------------------- */
@@ -218,7 +235,7 @@ $slide-before: 1;
 ------------------- */
 .header {
   background-color: $orange;
-  width: 13%;
+  width: 10%;
   max-width: 192px;
   height: 100vh;
   display: flex;
@@ -299,6 +316,7 @@ $slide-before: 1;
       writing-mode: horizontal-tb;
       margin: 0;
       padding-inline: 8px;
+      -webkit-text-stroke: 0;
     }
   }
 
@@ -312,28 +330,49 @@ $slide-before: 1;
     border-radius: 0 0 4px 4px;
     transition: all 1s linear(0, .25, 0.5, .75, 1, 0.9, .95, 1);
 
-    @mixin main-arrow-parts {
-      content: "";
-      background-color: $white;
-      border: .5px solid $black;
-      width: 3px;
-      height: 12px;
-      position: absolute;
-      bottom: 0px;
-      transform-origin: bottom;
-    }
+    // @mixin main-arrow-parts {
+    //   content: "";
+    //   background-color: $white;
+    //   border: .5px solid $black;
+    //   width: 3px;
+    //   height: 12px;
+    //   position: absolute;
+    //   bottom: 0px;
+    //   transform-origin: bottom;
+    // }
 
-    &::before {
-      @include main-arrow-parts;
-      right: 1px;
-      transform: rotate(45deg);
-    }
+    // &::before {
+    //   @include main-arrow-parts;
+    //   right: 1px;
+    //   transform: rotate(45deg);
+    // }
 
-    &::after {
-      @include main-arrow-parts;
-      left: 1px;
-      transform: rotate(-45deg);
-    }
+    // &::before {
+    //   background-color: $white;
+    //   content: '';
+    //   width: 2.75px;
+    //   height: 4px;
+    //   position: absolute;
+    //   left: -.5px;
+    //   bottom: 0px;
+    //   z-index: 10;
+    //   border-radius: 0 0 2px 0;
+    // }
+
+    // &::after {
+    //   // @include main-arrow-parts;
+    //   content: '>';
+    //   font-size: 2rem;
+    //   transform: rotate(90deg);
+    //   position: absolute;
+    //   left: -7px;
+    //   bottom: -16px;
+    //   color: $white;
+    //   -webkit-text-stroke: .5px $black;
+    //   z-index: -1;
+    //   // left: 1px;
+    //   // transform: rotate(-45deg);
+    // }
 
     &.load {
       height: calc(100vh - 337px);
@@ -478,7 +517,11 @@ $slide-before: 1;
         main
 -------------------- */
 .container_main-footer {
-  flex-grow: 1;
+  width: 90%;
+
+  @include sp {
+    width: 100%;
+  }
 }
 
 /* --------------------
@@ -649,21 +692,6 @@ $slide-before: 1;
     @include display-none;
   }
 
-  .br-pc {
-    display: inline;
-
-    @include sp {
-      display: none;
-    }
-  }
-
-  .br-sp {
-    display: none;
-
-    @include sp {
-      display: inline;
-    }
-  }
 
   /* viewmoreボタン */
   .container_viewmore {
@@ -712,6 +740,96 @@ $slide-before: 1;
 
 }
 
+/* --------------------
+    works section
+-------------------- */
+
+.works-section {
+
+  .container_works-contents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto 48px;
+
+    @include sp {
+      display: block;
+    }
+  }
+
+  .works-content {
+    width: 48%;
+    height: fit-content;
+    margin: 0 0 80px 0;
+    opacity: 0;
+    transform: scale(0);
+    transition: all .7s ease;
+
+
+    @include sp {
+      width: 100%;
+    }
+
+    &.on {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .container_works-content-img {
+    border: 1px solid $black;
+    margin: 0 0 8px 0;
+    overflow: hidden;
+  }
+
+  .works-content-img {
+    width: 100%;
+    transition: all .5s ease;
+
+    &:hover {
+      transform: scale(1.1, 1.1);
+      transform-origin: center;
+    }
+  }
+
+  .works-content-title {
+    text-align: center;
+
+  }
+
+  .container_viewmore {
+    background-color: $orange;
+    color: $white;
+    font-size: 1.875rem;
+    width: fit-content;
+    border: 1px solid $black;
+    margin: 0 auto;
+    padding: 12px 24px;
+
+    @include sp {
+      font-size: 1.5rem;
+    }
+  }
+
+  .viewmore-text {
+    height: fit-content;
+
+    &:hover .viewmore-arrow {
+      animation: viewmore-arrow .4s infinite alternate;
+
+      @keyframes viewmore-arrow {
+        100% {
+          transform: translateX(8px);
+        }
+      }
+    }
+  }
+
+  .viewmore-arrow {
+    display: inline-block;
+    margin: 0 0 0 8px;
+  }
+}
 
 /* --------------------
     contact section
@@ -719,7 +837,65 @@ $slide-before: 1;
 
 .contact-section {
   background-color: $light-orange;
+
+  .contact-text {
+    width: fit-content;
+    text-align: center;
+
+    &:first-of-type {
+      margin: 0 auto;
+
+      @include sp {
+        margin: 0 auto 1rem;
+      }
+    }
+
+    &:last-of-type {
+      margin: 0 auto 64px;
+
+      @include sp {
+        margin: 0 auto 48px;
+      }
+    }
+  }
+
+  .contact-button {
+    background-color: #EB5C01;
+    color: $white;
+    width: 240px;
+    height: 64px;
+    margin: 0 auto;
+    border: 1px solid $black;
+    border-radius: 80px;
+    transition: all .2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $white;
+      color: $orange;
+      border: 1px solid $orange;
+    }
+
+    @include sp {
+      width: 172px;
+      height: 56px;
+    }
+  }
+
+  .contact-button-text {
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 60px;
+
+    @include sp {
+      font-size: 1.1rem;
+      line-height: 52px;
+    }
+  }
 }
+
+
+
 
 
 
@@ -727,12 +903,12 @@ $slide-before: 1;
         footer
 -------------------- */
 .footer {
-  height: 192px;
+  height: 160px;
 
   small {
     font-size: .8rem;
     display: block;
-    line-height: 192px;
+    line-height: 160px;
     text-align: center;
   }
 }

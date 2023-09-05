@@ -65,13 +65,24 @@
   });
 
   /* -------------------------
-        vhの取得
+    works contents表示
   ------------------------- */
-  const viewportHeight = window.innerHeight;
-  const vhInPixels = viewportHeight + "px";
-  const styleElement = document.createElement("style");
-  styleElement.innerHTML = `:root { --vh: ${viewportHeight}px; }`;
-  document.body.appendChild(styleElement);
+  document.addEventListener('scroll', () => {
+    const containerWorksContents = document.querySelector('.container_works-contents');
+    const worksContents = document.querySelectorAll('.works-content');
+    const margin = 100;
+    let delay = 0;
+
+    if (window.innerHeight > containerWorksContents.getBoundingClientRect().top + margin) {
+      for (let i = 0; i < worksContents.length; i++) {
+        setTimeout(() => {
+          worksContents[i].classList.add('on');
+        }, delay);
+
+        delay += 500;
+      }
+    }
+  });
 }
 
 
