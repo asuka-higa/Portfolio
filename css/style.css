@@ -85,6 +85,12 @@ body {
 }
 
 /* --------------------
+        z-index
+-------------------- */
+/* 共通 */
+/* TOP */
+/* ABOUT */
+/* --------------------
       全体で共通
 -------------------- */
 a {
@@ -92,7 +98,12 @@ a {
 }
 
 section {
-  padding: 64px 0 128px 0;
+  padding: 64px 0 104px 0;
+}
+@media screen and (max-width: 767px) {
+  section {
+    padding: 72px 16px;
+  }
 }
 
 .contents {
@@ -100,6 +111,11 @@ section {
   height: -moz-fit-content;
   height: fit-content;
   margin: 0 auto;
+}
+@media screen and (max-width: 767px) {
+  .contents {
+    width: 100%;
+  }
 }
 
 .h2 {
@@ -113,11 +129,12 @@ section {
 @media screen and (max-width: 767px) {
   .h2 {
     font-size: 2rem;
-    margin: 0 auto 48px;
+    margin: 0 auto 56px;
     padding: 0 0 4px 0;
   }
 }
 
+/* 改行 */
 .br-pc {
   display: inline;
 }
@@ -136,14 +153,22 @@ section {
   }
 }
 
-/* --------------------
-        z-index
--------------------- */
 /* -------------------
         body
 ------------------- */
 .container_header-main {
   display: flex;
+  animation: fadeIn 0.5s forwards;
+  scroll-behavior: smooth;
+  /* ページ遷移時にふわっと表示する */
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @media screen and (max-width: 767px) {
   .container_header-main {
@@ -166,13 +191,15 @@ section {
   padding-top: 64px;
   position: sticky;
   z-index: 100;
-  /* logol/h1/hamburger-menuのコンテナ */
+  /* logo・h1・hamburger-menuのコンテナ */
   /* ロゴ画像 */
-  /* h1と矢印のコンテナ */
+  /* h1・矢印のコンテナ */
   /* h1 */
   /* 矢印 */
+  /* 矢印の先の部分　画像 */
   /* ハンバーガーメニューのアイコン */
   /* ナビゲーション */
+  /* 子ページを開いている時のマーク */
 }
 @media screen and (max-width: 767px) {
   .header {
@@ -189,7 +216,7 @@ section {
   background-color: #EB5C01;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
+  z-index: 90;
 }
 @media screen and (max-width: 767px) {
   .header .container_logo-h1-hamburger-menu {
@@ -237,6 +264,7 @@ section {
   writing-mode: vertical-rl;
   margin: 0 0 16px 0;
   -webkit-text-stroke: 0.5px #000;
+  /* topページ以外のPC版では表示しない */
 }
 @media screen and (max-width: 767px) {
   .header .main-title {
@@ -245,6 +273,14 @@ section {
     margin: 0;
     padding-inline: 8px;
     -webkit-text-stroke: 0;
+  }
+}
+.header .main-title.not-top {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .header .main-title.not-top {
+    display: block;
   }
 }
 .header .main-arrow {
@@ -266,6 +302,17 @@ section {
 }
 @media screen and (max-width: 767px) {
   .header .main-arrow {
+    display: none;
+  }
+}
+.header .main-arrow-img {
+  display: block;
+  width: 16px;
+  position: relative;
+  top: -13px;
+}
+@media screen and (max-width: 767px) {
+  .header .main-arrow-img {
     display: none;
   }
 }
@@ -327,7 +374,7 @@ section {
   align-items: center;
   justify-content: center;
   transition: transform 0.4s ease;
-  z-index: 5;
+  z-index: 80;
 }
 @media screen and (max-width: 767px) {
   .header .header-nav {
@@ -395,12 +442,18 @@ section {
 -------------------- */
 .about-section {
   background-color: #DEDDDD;
-  /* viewmoreの下に余白ができているので調整 */
+  /* ↓viewmoreをposition: absolute;にしたことで下に余白ができているので、基本設定から調整 */
   padding: 64px 0 98px 0;
   position: relative;
-  overflow: hidden;
   /* ファーストビュー　画像 */
-  /* 名前のコンテナ */
+  /* 名前・自己紹介・view more */
+  /* 疑似要素を右にずらす　@keyframes */
+  /* 名前コンテナ・自己紹介コンテナで共通の内容　@mixin */
+  /* 名前コンテナ */
+  /* 自己紹介コンテナ */
+  /* テキストを表示する@mixin */
+  /* 名前コンテナ・自己紹介コンテナ内のテキスト全てに共通 */
+  /* 名前　アルファベット表記の設定 */
   /* viewmoreボタン */
 }
 @media screen and (max-width: 767px) {
@@ -408,26 +461,36 @@ section {
     padding: 24px 0 38px 0;
   }
 }
-.about-section .firstview-img {
-  width: 75%;
-  height: 560px;
-  margin: 0 auto;
-  border: solid 1px #000;
-  border-radius: 76% 24% 55% 45%/66% 22% 78% 34%;
+.about-section .container_firstview {
+  width: 100%;
+  display: flex;
   position: absolute;
-  top: 200px;
-  right: 0;
-  left: 0;
-  background-image: url("/img/firstview.jpeg");
-  background-size: cover;
-  background-position: center top;
+  top: 0;
+  z-index: 0;
 }
-@media screen and (max-width: 767px) {
-  .about-section .firstview-img {
-    width: 150vw;
-    margin: 0 calc(50% - 50vw);
-    top: 120px;
-    left: -20%;
+.about-section .firstview-imgs {
+  display: flex;
+}
+.about-section .firstview-img {
+  margin-left: -30px;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.about-section .firstview-img1,
+.about-section .firstview-img2,
+.about-section .firstview-img3 {
+  display: block;
+  width: 35vw;
+}
+.about-section .firstview-orange,
+.about-section .firstview-blue {
+  width: 30vw;
+  z-index: -1;
+}
+@keyframes path {
+  100% {
+    offset-distance: 100%;
   }
 }
 @media screen and (max-width: 767px) {
@@ -436,38 +499,35 @@ section {
     padding: 0 16px;
   }
 }
+@keyframes display {
+  100% {
+    transform: translateX(100%);
+  }
+}
 .about-section .container_name {
   background-color: #fff;
   width: 0;
-  height: 50px;
-  display: flex;
   border: 1px solid #000;
-  margin-bottom: 320px;
-  transition: all 0.6s ease-in-out;
   overflow: hidden;
   position: relative;
   opacity: 0;
-}
-@media screen and (max-width: 767px) {
-  .about-section .container_name {
-    height: 87px;
-    margin-bottom: 360px;
-  }
+  /* 右にずらす疑似要素 */
+  height: 50px;
+  display: flex;
+  margin-bottom: 320px;
+  transition: all 0.6s ease-in-out;
 }
 .about-section .container_name.load {
   opacity: 1;
-  width: 285px;
   padding: 12px 24px;
 }
 @media screen and (max-width: 767px) {
   .about-section .container_name.load {
-    width: 156px;
     padding: 12px 20px;
   }
 }
 .about-section .container_name::before {
   content: "";
-  animation: display 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
   background: #fff;
   position: absolute;
   top: 0;
@@ -477,46 +537,60 @@ section {
   pointer-events: none;
   z-index: 1;
 }
-@keyframes display {
-  100% {
-    transform: translateX(100%);
-  }
-}
 @media screen and (max-width: 767px) {
   .about-section .container_name {
     display: block;
+    height: 87px;
+    margin-bottom: 360px;
   }
 }
-.about-section .name_alphabet {
-  font-size: 2rem;
-  margin: 0 16px 0 0;
-  display: none;
-}
-.about-section .name_alphabet.load {
-  display: block;
+.about-section .container_name.load {
+  width: 285px;
 }
 @media screen and (max-width: 767px) {
-  .about-section .name_alphabet {
-    font-size: 2rem;
-    margin: 0 0 8px 0;
+  .about-section .container_name.load {
+    width: 156px;
   }
 }
-.about-section .name_kanji {
-  display: none;
+.about-section .container_name::before {
+  animation: display 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
 }
-.about-section .name_kanji.load {
-  display: block;
+@media screen and (max-width: 767px) {
+  .about-section .container_name::before {
+    animation: display 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+  }
 }
 .about-section .container_self-introduction {
   background-color: #fff;
   width: 0;
-  height: 112px;
   border: 1px solid #000;
-  margin: 0 0 0 calc(100% - 396px);
   overflow: hidden;
   position: relative;
-  transition: all 0.7s ease-in-out;
   opacity: 0;
+  /* 右にずらす疑似要素 */
+  height: 112px;
+  margin: 0 0 0 calc(100% - 396px);
+  transition: all 0.7s ease-in-out;
+}
+.about-section .container_self-introduction.load {
+  opacity: 1;
+  padding: 12px 24px;
+}
+@media screen and (max-width: 767px) {
+  .about-section .container_self-introduction.load {
+    padding: 12px 20px;
+  }
+}
+.about-section .container_self-introduction::before {
+  content: "";
+  background: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 @media screen and (max-width: 767px) {
   .about-section .container_self-introduction {
@@ -525,36 +599,42 @@ section {
   }
 }
 .about-section .container_self-introduction.load {
-  opacity: 1;
   width: 396px;
-  padding: 12px 24px;
 }
 @media screen and (max-width: 767px) {
   .about-section .container_self-introduction.load {
-    padding: 12px 20px;
     width: 282px;
     line-height: 1.5rem;
   }
 }
 .about-section .container_self-introduction::before {
-  content: "";
   animation: display 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.8s forwards;
-  background: #fff;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 1;
 }
+@media screen and (max-width: 767px) {
+  .about-section .container_self-introduction::before {
+    animation: display 0.7s cubic-bezier(0.4, 0, 0.2, 1) 2.3s forwards;
+  }
+}
+.about-section .name_alphabet,
+.about-section .name_kanji,
 .about-section .self-introduction-text1,
 .about-section .self-introduction-text2 {
   display: none;
 }
+.about-section .name_alphabet.load,
+.about-section .name_kanji.load,
 .about-section .self-introduction-text1.load,
 .about-section .self-introduction-text2.load {
   display: block;
+}
+.about-section .name_alphabet {
+  font-size: 2rem;
+  margin: 0 16px 0 0;
+}
+@media screen and (max-width: 767px) {
+  .about-section .name_alphabet {
+    margin: 0 0 8px 0;
+  }
 }
 .about-section .container_viewmore {
   background-color: #EB5C01;
@@ -601,6 +681,10 @@ section {
 /* --------------------
     works section
 -------------------- */
+.works-section {
+  /* 作業内容のラベル */
+  /* img */
+}
 .works-section .container_works-contents {
   display: flex;
   flex-wrap: wrap;
@@ -620,6 +704,7 @@ section {
   opacity: 0;
   transform: scale(0);
   transition: all 0.7s ease;
+  /* スクロールされた時に表示 */
 }
 @media screen and (max-width: 767px) {
   .works-section .works-content {
@@ -630,10 +715,121 @@ section {
   opacity: 1;
   transform: scale(1);
 }
+.works-section .label-container {
+  pointer-events: none;
+  width: 30%;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-left: auto;
+  position: absolute;
+  top: 16px;
+  right: -8px;
+  z-index: 1;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-container {
+    width: 25%;
+    position: initial;
+  }
+}
+.works-section .label-top {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-top {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-color: #DEDDDD;
+  }
+}
+.works-section .label-inner {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-inner {
+    margin: 0 0 0 2px;
+  }
+}
+.works-section .label-pole {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-pole {
+    display: block;
+    width: 4px;
+    border-inline: 1px solid #000;
+  }
+}
+.works-section .labels {
+  flex-grow: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.works-section .labels:last-child {
+  margin-bottom: 12px;
+}
+.works-section .labels.on {
+  opacity: 1;
+}
+@media screen and (max-width: 767px) {
+  .works-section .labels {
+    transform: translateY(120px);
+    opacity: 1;
+    transition: transform 0.3s ease;
+  }
+  .works-section .labels.on {
+    transform: translateY(0);
+  }
+}
+.works-section .label-design-frame,
+.works-section .label-coding-frame {
+  box-shadow: 0 0 4px 1px #adadad;
+  height: 28px;
+  margin-bottom: 8px;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-design-frame,
+  .works-section .label-coding-frame {
+    border-left: none;
+    margin-bottom: 4px;
+    box-shadow: none;
+  }
+}
+.works-section .label-design-text,
+.works-section .label-coding-text {
+  width: 90%;
+  height: 100%;
+  line-height: 100%;
+  padding-top: 4px;
+  margin-left: auto;
+  font-size: 0.9375rem;
+  text-align: center;
+  color: #fff;
+}
+@media screen and (max-width: 767px) {
+  .works-section .label-design-text,
+  .works-section .label-coding-text {
+    width: 100%;
+  }
+}
+.works-section .label-design-text {
+  background-color: #1E92E6;
+}
+.works-section .label-coding-text {
+  background-color: #EB5C01;
+}
 .works-section .container_works-content-img {
   border: 1px solid #000;
   margin: 0 0 8px 0;
   overflow: hidden;
+  position: relative;
 }
 .works-section .works-content-img {
   width: 100%;
@@ -645,6 +841,9 @@ section {
 }
 .works-section .works-content-title {
   text-align: center;
+}
+.works-section .works-content-title:hover {
+  opacity: 0.5;
 }
 .works-section .container_viewmore {
   background-color: #EB5C01;
@@ -719,7 +918,6 @@ section {
 .contact-section .contact-button:hover {
   background-color: #fff;
   color: #EB5C01;
-  border: 1px solid #EB5C01;
 }
 @media screen and (max-width: 767px) {
   .contact-section .contact-button {
@@ -750,4 +948,164 @@ section {
   display: block;
   line-height: 160px;
   text-align: center;
+}
+
+/* --------------------
+      about.html
+-------------------- */
+.aboutme-section {
+  position: relative;
+  height: 793px;
+  overflow: hidden;
+  /* 装飾 */
+  /* コンテンツ */
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section {
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
+.aboutme-section .container_aboutme-titles {
+  width: 100%;
+  height: 793px;
+  display: flex;
+  position: absolute;
+  z-index: -1;
+}
+.aboutme-section .container_aboutme-title-left,
+.aboutme-section .container_aboutme-title-right {
+  width: 50%;
+  display: flex;
+  position: relative;
+}
+.aboutme-section .container_aboutme-title-left {
+  justify-content: left;
+}
+.aboutme-section .container_aboutme-title-right {
+  justify-content: right;
+}
+.aboutme-section .aboutme-title-left,
+.aboutme-section .aboutme-title-right {
+  color: #fff;
+  position: absolute;
+  font-size: 10rem;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.aboutme-section .aboutme-title-left {
+  -webkit-text-stroke: 1.2px #EB5C01;
+  opacity: 0.5;
+  top: -182px;
+  transform: rotate(90deg);
+  transform-origin: bottom left;
+  margin-left: -3px;
+}
+.aboutme-section .aboutme-title-right {
+  -webkit-text-stroke: 1.2px #1E92E6;
+  opacity: 0.5;
+  bottom: 548px;
+  transform: rotate(-90deg);
+  transform-origin: bottom right;
+  margin-right: -3px;
+}
+.aboutme-section .container_aboutme {
+  z-index: 1;
+}
+.aboutme-section .aboutme-name {
+  margin: 0 0 32px 0;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .aboutme-name {
+    margin: 0 auto 32px;
+  }
+}
+.aboutme-section .aboutme-name_alphabet {
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 3rem;
+  margin: 0 0 24px 0;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .aboutme-name_alphabet {
+    font-size: 2.5rem;
+    margin: 0 0 8px 0;
+  }
+}
+.aboutme-section .aboutme-name_kanji {
+  margin-left: -3px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .aboutme-name_kanji {
+    margin: 0 auto;
+    transform: translateX(-3px);
+  }
+}
+.aboutme-section .container_profileimg-selfintro {
+  width: 100%;
+  height: 504px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .container_profileimg-selfintro {
+    height: -moz-fit-content;
+    height: fit-content;
+    margin: 0;
+    display: block;
+  }
+}
+.aboutme-section .aboutme-profile-img {
+  display: block;
+  width: 70%;
+  min-width: 560px;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .aboutme-profile-img {
+    width: 100%;
+    min-width: 0px;
+    margin: 0 0 40px 0;
+  }
+}
+.aboutme-section .container_selfintro {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48%;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .container_selfintro {
+    position: initial;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+.aboutme-section .aboutme-self-introduction {
+  font-size: 1rem;
+  margin: 0 0 32px 0;
+  padding: 10px 14px;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+.aboutme-section .aboutme-self-introduction:last-of-type {
+  margin: 0;
+}
+@media screen and (max-width: 960px) {
+  .aboutme-section .aboutme-self-introduction {
+    margin: 0;
+    padding: 10px 48px;
+  }
+  .aboutme-section .aboutme-self-introduction:first-of-type {
+    border: none;
+    border-block: 1px solid #000;
+  }
+  .aboutme-section .aboutme-self-introduction:not(:first-of-type) {
+    border: none;
+    border-bottom: 1px solid #000;
+  }
 }/*# sourceMappingURL=style.css.map */
